@@ -22,6 +22,7 @@ public class GatewayController {
             return "Token is valid for user: " + jwtUtil.extractUsername(token);
         } else {
             return "Invalid or expired token";
+            //12345
         }
     }
 
