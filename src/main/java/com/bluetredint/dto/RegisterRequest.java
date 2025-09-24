@@ -1,5 +1,7 @@
 package com.bluetredint.dto;
 
+import com.bluetredint.enums.Role;
+
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -8,8 +10,13 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 public class RegisterRequest {
-    private String username;
-    private String fullName;
-    private String email;
-    private String password;
+	private String fullName;
+	private String email;
+	private String userName;
+	private String password;
+	private String confirmPassword;
+	private Role role;
+
+	private String category;
+	private String phoneNumber;
 }

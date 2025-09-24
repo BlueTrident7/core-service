@@ -1,9 +1,19 @@
 package com.bluetredint.entity;
 
+import com.bluetredint.enums.Role;
 
-
-import jakarta.persistence.*;
-import lombok.*;
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.persistence.Table;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
 @Entity
 @Table(name = "users")
@@ -13,20 +23,23 @@ import lombok.*;
 @Builder
 public class User {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	private Long id;
 
-    @Column(nullable = false, unique = true)
-    private String username;
+	private String fullName;
 
-    private String fullName;
+	private String userName;
 
-    @Column(nullable = false, unique = true)
-    private String email;
+	@Column(unique = true, nullable = false)
+	private String email;
 
-    private String password;
+	private String password;
 
-    private String role = "USER"; // Default role
+	@Enumerated(EnumType.STRING)
+	private Role role;
+
+	private String category;
+
+	private String phoneNumber;
 }
-
