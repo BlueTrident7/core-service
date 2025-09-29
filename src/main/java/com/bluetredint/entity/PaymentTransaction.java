@@ -31,7 +31,7 @@ public class PaymentTransaction {
 
 	@ManyToOne
 	@JoinColumn(name = "investment_id")
-	private UserInvestment investment;
+	private UserInvestmentPlans investment;
 
 	private String transactionId; // from gateway (e.g., Razorpay/Stripe/PayPal)
 

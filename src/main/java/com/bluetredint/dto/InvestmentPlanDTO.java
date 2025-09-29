@@ -4,12 +4,15 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+@Data
 @AllArgsConstructor
 @NoArgsConstructor
-@Data
-public class PlansDTO {
+public class InvestmentPlanDTO {
+
+	private Long id;
 	private String planName;
-	private String categoryId;
 	private double price;
+	private String identifierCode;
 	private String description;
+	private String planPolicy;
 }

@@ -22,7 +22,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-public class UserInvestment {
+public class UserInvestmentPlans {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
@@ -34,8 +34,6 @@ public class UserInvestment {
 	@ManyToOne
 	@JoinColumn(name = "plan_id")
 	private InvestmentPlans plan;
-
-	private Double investedAmount;
 
 	@Enumerated(EnumType.STRING)
 	private InvestmentStatus status;

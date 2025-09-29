@@ -39,7 +39,9 @@ public class User {
 	@Enumerated(EnumType.STRING)
 	private Role role;
 
-	private String category;
+	private Category category;
 
 	private String phoneNumber;
+
+	private boolean approvals;
 }

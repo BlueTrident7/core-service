@@ -4,10 +4,10 @@ import java.util.List;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 
-import com.bluetredint.entity.UserInvestment;
+import com.bluetredint.entity.UserInvestmentPlans;
 
-public interface UserInvestmentRepository extends JpaRepository<UserInvestment, Long> {
-	List<UserInvestment> findByUserId(Long userId);
+public interface UserInvestmentRepository extends JpaRepository<UserInvestmentPlans, Long> {
+	List<UserInvestmentPlans> findByUserId(Long userId);
 
-	List<UserInvestment> findByPlanId(Long planId);
+	List<UserInvestmentPlans> findByPlanId(Long planId);
 }

@@ -16,7 +16,7 @@ public class RegisterRequest {
 	private String password;
 	private String confirmPassword;
 	private Role role;
-
 	private String category;
 	private String phoneNumber;
+	private Long categoryId;
 }

@@ -6,11 +6,13 @@ import org.springframework.stereotype.Service;
 import com.bluetredint.dto.AuthResponse;
 import com.bluetredint.dto.LoginRequest;
 import com.bluetredint.dto.RegisterRequest;
+import com.bluetredint.entity.Category;
 import com.bluetredint.entity.User;
 import com.bluetredint.enums.Role;
 import com.bluetredint.repository.UserRepository;
 import com.bluetredint.security.JwtUtil;
 import com.bluetredint.service.AuthService;
+import com.bluetredint.service.CategoryService;
 
 import lombok.RequiredArgsConstructor;
 
@@ -20,6 +22,8 @@ public class AuthServiceImpl implements AuthService {
 
 	private final UserRepository userRepository;
 	private final PasswordEncoder passwordEncoder;
+	private final CategoryService categoryService;
+
 	private final JwtUtil jwtUtil;
 
 	@Override
@@ -29,9 +33,14 @@ public class AuthServiceImpl implements AuthService {
 			throw new RuntimeException("User already exists");
 		}
 
+		Category category = null;
+		try {
+			category = categoryService.getFindById(request.getCategoryId());
+		} catch (Exception e) {
+		}
+
 		User user = User.builder().fullName(request.getFullName()).email(request.getEmail())
-				.password(passwordEncoder.encode(request.getPassword())).role(request.getRole())
-				.category(request.getRole() == Role.USER ? request.getCategory() : null)
+				.password(passwordEncoder.encode(request.getPassword())).role(request.getRole()).category(category)
 				.phoneNumber(request.getRole() == Role.USER ? request.getPhoneNumber() : null).build();
 		userRepository.save(user);
 

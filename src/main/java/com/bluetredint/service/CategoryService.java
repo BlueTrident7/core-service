@@ -3,17 +3,20 @@ package com.bluetredint.service;
 import java.util.List;
 
 import com.bluetredint.dto.CategoryPostDTO;
+import com.bluetredint.entity.Category;
 
 public interface CategoryService {
 
-	CategoryPostDTO addCategory(CategoryPostDTO dto) throws Exception;
+	public CategoryPostDTO addCategory(CategoryPostDTO dto) throws Exception;
 
-	List<CategoryPostDTO> getAllCategories();
+	public List<CategoryPostDTO> getAllCategories();
 
-	void deleteCategory(Long id) throws Exception;
+	public void deleteCategory(Long id) throws Exception;
 
-	CategoryPostDTO updateCategory(Long id, CategoryPostDTO dto) throws Exception;
+	public CategoryPostDTO updateCategory(Long id, CategoryPostDTO dto) throws Exception;
 
-	CategoryPostDTO getCategoryById(Long id) throws Exception;
+	public CategoryPostDTO getCategoryById(Long id) throws Exception;
+
+	public Category getFindById(Long id) throws Exception;
 
 }
