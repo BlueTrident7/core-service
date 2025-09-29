@@ -1,12 +1,14 @@
 package com.bluetrident.entity;
 
-import java.time.LocalDateTime;
+import com.bluetrident.entity.Category;
+import com.bluetrident.enums.Role;
 
-import com.bluetrident.enums.PaymentStatus;
-
+import jakarta.persistence.CascadeType;
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
+import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
@@ -19,27 +21,34 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 @Entity
-@Table(name = "payment_transactions")
+@Table(name = "users")
 @Data
-@NoArgsConstructor
 @AllArgsConstructor
+@NoArgsConstructor
 @Builder
-public class PaymentTransaction {
+public class User {
+
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 
-	@ManyToOne
-	@JoinColumn(name = "investment_id")
-	private UserInvestmentPlans investment;
+	private String fullName;
 
-	private String transactionId; // from gateway (e.g., Razorpay/Stripe/PayPal)
+	private String userName;
 
-	private Double amount;
+	@Column(unique = true, nullable = false)
+	private String email;
+
+	private String password;
 
 	@Enumerated(EnumType.STRING)
-	private PaymentStatus status; // INITIATED, SUCCESS, FAILED
+	private Role role;
 
-	private String paymentMethod; // e.g., CARD, UPI, NETBANKING
-	private LocalDateTime createdAt;
+	@ManyToOne(fetch = FetchType.LAZY)
+	@JoinColumn(name = "category_id")
+	private Category category;
+
+	private String phoneNumber;
+
+	private boolean approvals;
 }

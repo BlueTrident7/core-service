@@ -68,4 +68,9 @@ public class CategoryServiceImpl implements CategoryService {
 		dto.setDescription(c.getDescription());
 		return dto;
 	}
+
+	@Override
+	public Category getFindById(Long id) throws Exception {
+		return repository.findById(id).get();
+	}
 }

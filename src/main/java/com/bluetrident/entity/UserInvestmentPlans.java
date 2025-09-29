@@ -1,8 +1,6 @@
 package com.bluetrident.entity;
 
-import java.time.LocalDateTime;
-
-import com.bluetrident.enums.PaymentStatus;
+import com.bluetrident.enums.InvestmentStatus;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
@@ -19,27 +17,24 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 @Entity
-@Table(name = "payment_transactions")
+@Table(name = "user_investments")
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-public class PaymentTransaction {
+public class UserInvestmentPlans {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 
 	@ManyToOne
-	@JoinColumn(name = "investment_id")
-	private UserInvestmentPlans investment;
+	@JoinColumn(name = "user_id")
+	private User user;
 
-	private String transactionId; // from gateway (e.g., Razorpay/Stripe/PayPal)
-
-	private Double amount;
+	@ManyToOne
+	@JoinColumn(name = "plan_id")
+	private InvestmentPlans plan;
 
 	@Enumerated(EnumType.STRING)
-	private PaymentStatus status; // INITIATED, SUCCESS, FAILED
-
-	private String paymentMethod; // e.g., CARD, UPI, NETBANKING
-	private LocalDateTime createdAt;
+	private InvestmentStatus status;
 }

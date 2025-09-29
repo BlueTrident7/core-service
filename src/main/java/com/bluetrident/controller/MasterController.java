@@ -15,9 +15,10 @@ import com.bluetrident.config.ApplicationResponse;
 import com.bluetrident.config.CommonConstants;
 import com.bluetrident.config.exception.ApplicationException;
 import com.bluetrident.dto.CategoryPostDTO;
-import com.bluetrident.dto.PlansDTO;
+import com.bluetrident.dto.InvestmentPlanDTO;
+import com.bluetrident.dto.InvestmentPlansDTO;
 import com.bluetrident.service.CategoryService;
-import com.bluetrident.service.PlanService;
+import com.bluetrident.service.InvestmentPlanService;
 
 import io.swagger.v3.oas.annotations.parameters.RequestBody;
 
@@ -28,7 +29,7 @@ public class MasterController {
 	private CategoryService categoryService;
 
 	@Autowired
-	private PlanService plansService;
+	private InvestmentPlanService plansService;
 
 	@PostMapping("/category")
 	public ApplicationResponse<CategoryPostDTO> addCategory(@RequestBody CategoryPostDTO dto) throws Exception {
@@ -41,7 +42,7 @@ public class MasterController {
 		}
 	}
 
-	@GetMapping("/category")
+	@GetMapping("get/category")
 	public ApplicationResponse<List<CategoryPostDTO>> getAllCategories() {
 		return new ApplicationResponse<>(CommonConstants.SUCCESS, String.valueOf(HttpStatus.OK.value()),
 				CommonConstants.OK, categoryService.getAllCategories());
@@ -84,19 +85,19 @@ public class MasterController {
 
 	// ================= Plans =================
 	@PostMapping("/plan")
-	public ApplicationResponse<PlansDTO> addPlan(@RequestBody PlansDTO dto) throws Exception {
+	public ApplicationResponse<InvestmentPlansDTO> addPlan(@RequestBody InvestmentPlansDTO dto) throws Exception {
 		return new ApplicationResponse<>(CommonConstants.SUCCESS, String.valueOf(HttpStatus.OK.value()),
 				CommonConstants.OK, plansService.addPlan(dto));
 	}
 
-	@GetMapping("/plan")
-	public ApplicationResponse<List<PlansDTO>> getAllPlans() {
+	@GetMapping("get/plans")
+	public ApplicationResponse<List<InvestmentPlansDTO>> getAllPlans() {
 		return new ApplicationResponse<>(CommonConstants.SUCCESS, String.valueOf(HttpStatus.OK.value()),
 				CommonConstants.OK, plansService.getAllPlans());
 	}
 
 	@GetMapping("/plan/{id}")
-	public ApplicationResponse<PlansDTO> getPlan(@PathVariable Long id) throws Exception {
+	public ApplicationResponse<InvestmentPlansDTO> getPlan(@PathVariable Long id) throws Exception {
 		try {
 			return new ApplicationResponse<>(CommonConstants.SUCCESS, String.valueOf(HttpStatus.OK.value()),
 					CommonConstants.OK, plansService.getPlanById(id));
@@ -107,7 +108,8 @@ public class MasterController {
 	}
 
 	@PutMapping("/plan/{id}")
-	public ApplicationResponse<PlansDTO> updatePlan(@PathVariable Long id, @RequestBody PlansDTO dto) throws Exception {
+	public ApplicationResponse<InvestmentPlansDTO> updatePlan(@PathVariable Long id,
+			@RequestBody InvestmentPlansDTO dto) throws Exception {
 		try {
 			return new ApplicationResponse<>(CommonConstants.SUCCESS, String.valueOf(HttpStatus.OK.value()),
 					CommonConstants.OK, plansService.updatePlan(id, dto));
@@ -127,5 +129,11 @@ public class MasterController {
 			return new ApplicationResponse<>(CommonConstants.ERROR,
 					String.valueOf(HttpStatus.INTERNAL_SERVER_ERROR.value()), e.getMessage(), null);
 		}
+	}
+
+	@GetMapping("investment/plans")
+	public ApplicationResponse<List<InvestmentPlanDTO>> getInvestmentPlans() {
+		return new ApplicationResponse<>(CommonConstants.SUCCESS, String.valueOf(HttpStatus.OK.value()),
+				CommonConstants.OK, plansService.getInvestmentPlans());
 	}
 }
