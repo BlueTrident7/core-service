@@ -3,16 +3,16 @@ package com.bluetredint.serviceimpl;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
-import com.bluetredint.dto.AuthResponse;
-import com.bluetredint.dto.LoginRequest;
 import com.bluetredint.dto.RegisterRequest;
-import com.bluetredint.entity.Category;
 import com.bluetredint.entity.User;
-import com.bluetredint.enums.Role;
-import com.bluetredint.repository.UserRepository;
-import com.bluetredint.security.JwtUtil;
-import com.bluetredint.service.AuthService;
 import com.bluetredint.service.CategoryService;
+import com.bluetrident.dto.AuthResponse;
+import com.bluetrident.dto.LoginRequest;
+import com.bluetrident.entity.Category;
+import com.bluetrident.enums.Role;
+import com.bluetrident.repository.UserRepository;
+import com.bluetrident.security.JwtUtil;
+import com.bluetrident.service.AuthService;
 
 import lombok.RequiredArgsConstructor;
 

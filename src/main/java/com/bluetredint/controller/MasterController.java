@@ -11,14 +11,14 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.bluetredint.config.ApplicationResponse;
-import com.bluetredint.config.CommonConstants;
-import com.bluetredint.config.exception.ApplicationException;
-import com.bluetredint.dto.CategoryPostDTO;
 import com.bluetredint.dto.InvestmentPlanDTO;
 import com.bluetredint.dto.InvestmentPlansDTO;
 import com.bluetredint.service.CategoryService;
 import com.bluetredint.service.InvestmentPlanService;
+import com.bluetrident.config.ApplicationResponse;
+import com.bluetrident.config.CommonConstants;
+import com.bluetrident.config.exception.ApplicationException;
+import com.bluetrident.dto.CategoryPostDTO;
 
 import io.swagger.v3.oas.annotations.parameters.RequestBody;
 
@@ -108,7 +108,8 @@ public class MasterController {
 	}
 
 	@PutMapping("/plan/{id}")
-	public ApplicationResponse<InvestmentPlansDTO> updatePlan(@PathVariable Long id, @RequestBody InvestmentPlansDTO dto) throws Exception {
+	public ApplicationResponse<InvestmentPlansDTO> updatePlan(@PathVariable Long id,
+			@RequestBody InvestmentPlansDTO dto) throws Exception {
 		try {
 			return new ApplicationResponse<>(CommonConstants.SUCCESS, String.valueOf(HttpStatus.OK.value()),
 					CommonConstants.OK, plansService.updatePlan(id, dto));

@@ -1,6 +1,6 @@
 package com.bluetredint.entity;
 
-import com.bluetredint.enums.InvestmentStatus;
+import com.bluetrident.enums.InvestmentStatus;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;

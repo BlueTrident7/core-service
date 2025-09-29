@@ -2,7 +2,7 @@ package com.bluetredint.entity;
 
 import java.time.LocalDateTime;
 
-import com.bluetredint.enums.PaymentStatus;
+import com.bluetrident.enums.PaymentStatus;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;

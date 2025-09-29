@@ -1,6 +1,6 @@
 package com.bluetredint.dto;
 
-import com.bluetredint.enums.Role;
+import com.bluetrident.enums.Role;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;

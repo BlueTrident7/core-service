@@ -1,6 +1,7 @@
 package com.bluetredint.entity;
 
-import com.bluetredint.enums.Role;
+import com.bluetrident.entity.Category;
+import com.bluetrident.enums.Role;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;

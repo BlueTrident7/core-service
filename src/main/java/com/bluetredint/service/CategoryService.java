@@ -2,8 +2,8 @@ package com.bluetredint.service;
 
 import java.util.List;
 
-import com.bluetredint.dto.CategoryPostDTO;
-import com.bluetredint.entity.Category;
+import com.bluetrident.dto.CategoryPostDTO;
+import com.bluetrident.entity.Category;
 
 public interface CategoryService {
 

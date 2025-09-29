@@ -6,10 +6,10 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.bluetredint.config.ApplicationResponse;
-import com.bluetredint.config.CommonConstants;
 import com.bluetredint.dto.UserProfileDTO;
 import com.bluetredint.service.UserService;
+import com.bluetrident.config.ApplicationResponse;
+import com.bluetrident.config.CommonConstants;
 
 @RestController
 public class UserController {
