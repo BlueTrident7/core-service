@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.bluetrident.config.ApplicationResponse;
@@ -17,6 +18,7 @@ import com.bluetrident.config.exception.ApplicationException;
 import com.bluetrident.dto.CategoryPostDTO;
 import com.bluetrident.dto.InvestmentPlanDTO;
 import com.bluetrident.dto.InvestmentPlansDTO;
+import com.bluetrident.dto.TransactionsDTO;
 import com.bluetrident.service.CategoryService;
 import com.bluetrident.service.InvestmentPlanService;
 
@@ -135,5 +137,13 @@ public class MasterController {
 	public ApplicationResponse<List<InvestmentPlanDTO>> getInvestmentPlans() {
 		return new ApplicationResponse<>(CommonConstants.SUCCESS, String.valueOf(HttpStatus.OK.value()),
 				CommonConstants.OK, plansService.getInvestmentPlans());
+	}
+
+	@GetMapping("transaction/list")
+	public ApplicationResponse<List<TransactionsDTO>> getTransactionList(
+			@RequestParam(name = "userId", required = true) Long userId) {
+
+		return new ApplicationResponse<>(CommonConstants.SUCCESS, String.valueOf(HttpStatus.OK.value()),
+				CommonConstants.OK, plansService.getTransactionList(userId));
 	}
 }

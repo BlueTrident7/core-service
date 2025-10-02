@@ -29,7 +29,7 @@ public class AuthServiceImpl implements AuthService {
 	@Override
 	public AuthResponse register(RegisterRequest request) {
 
-		if (userRepository.existsByUsername(request.getUsername())
+		if (userRepository.existsByUserName(request.getUsername())
 				|| userRepository.existsByEmail(request.getEmail())) {
 			throw new RuntimeException("User already exists");
 		}
@@ -52,7 +52,7 @@ public class AuthServiceImpl implements AuthService {
 
 	@Override
 	public AuthResponse login(LoginRequest request) {
-		User user = userRepository.findByUsername(request.getUsername())
+		User user = userRepository.findByUserName(request.getUsername())
 				.orElseThrow(() -> new RuntimeException("User not found"));
 
 		if (!passwordEncoder.matches(request.getPassword(), user.getPassword())) {

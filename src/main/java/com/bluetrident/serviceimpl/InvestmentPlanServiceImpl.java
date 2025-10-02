@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 
 import com.bluetrident.dto.InvestmentPlanDTO;
 import com.bluetrident.dto.InvestmentPlansDTO;
+import com.bluetrident.dto.TransactionsDTO;
 import com.bluetrident.entity.InvestmentPlans;
 import com.bluetrident.enums.PlanType;
 import com.bluetrident.jdbcTemplate.InvestmentPlanRepository;
@@ -94,5 +95,11 @@ public class InvestmentPlanServiceImpl implements InvestmentPlanService {
 	@Override
 	public List<InvestmentPlanDTO> getInvestmentPlans() {
 		return investmentPlanRepository.getAllPlans();
+	}
+
+	@Override
+	public List<TransactionsDTO> getTransactionList(Long userId) {
+
+		return null;
 	}
 }
