@@ -1,9 +1,7 @@
 package com.bluetrident.entity;
 
-import com.bluetrident.entity.Category;
 import com.bluetrident.enums.Role;
 
-import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
@@ -34,7 +32,7 @@ public class User {
 
 	private String fullName;
 
-	private String userName;
+	private String username;
 
 	@Column(unique = true, nullable = false)
 	private String email;

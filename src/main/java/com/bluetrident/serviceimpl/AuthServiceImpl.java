@@ -39,15 +39,15 @@ public class AuthServiceImpl implements AuthService {
 		} catch (Exception e) {
 		}
 
-		User user = User.builder().fullName(request.getFullName()).userName(request.getUsername()) // ← add this line
+		User user = User.builder().fullName(request.getFullName()).username(request.getUsername()) // ← add this line
 				.email(request.getEmail()).password(passwordEncoder.encode(request.getPassword()))
 				.role(request.getRole()).category(category)
 				.phoneNumber(request.getRole() == Role.USER ? request.getPhoneNumber() : null).build();
 
 		userRepository.save(user);
 
-		String token = jwtUtil.generateToken(user.getUserName());
-		return new AuthResponse(token, user.getUserName());
+		String token = jwtUtil.generateToken(user.getUsername());
+		return new AuthResponse(token, user.getUsername());
 	}
 
 	@Override
@@ -59,8 +59,8 @@ public class AuthServiceImpl implements AuthService {
 			throw new RuntimeException("Invalid credentials");
 		}
 
-		String token = jwtUtil.generateToken(user.getUserName());
-		return new AuthResponse(token, user.getUserName());
+		String token = jwtUtil.generateToken(user.getUsername());
+		return new AuthResponse(token, user.getUsername());
 	}
 
 }
