@@ -13,7 +13,6 @@ import com.bluetrident.repository.IUserRepository;
 import com.bluetrident.security.JwtUtil;
 import com.bluetrident.service.AuthService;
 import com.bluetrident.service.CategoryService;
-
 import lombok.RequiredArgsConstructor;
 
 @Service
@@ -43,7 +42,7 @@ public class AuthServiceImpl implements AuthService {
 				.email(request.getEmail()).password(passwordEncoder.encode(request.getPassword()))
 				.role(request.getRole()==null?Role.USER:request.getRole())
 				.phoneNumber(request.getPhoneNumber()!= null? request.getPhoneNumber() : null).build();
-    
+
 		userRepository.save(user);
 
 		String token = jwtUtil.generateToken(user.getUsername());
