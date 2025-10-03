@@ -21,4 +21,6 @@ public class RegisterRequest {
 	private String phoneNumber;
 
 	private Long categoryId;
+
+	private Boolean termsAccepted;
 }

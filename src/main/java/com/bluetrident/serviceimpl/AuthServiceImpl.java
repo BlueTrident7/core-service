@@ -42,7 +42,8 @@ public class AuthServiceImpl implements AuthService {
 		User user = User.builder().fullName(request.getFullName()).username(request.getUsername()) // ← add this line
 				.email(request.getEmail()).password(passwordEncoder.encode(request.getPassword()))
 				.role(request.getRole()).category(category)
-				.phoneNumber(request.getRole() == Role.USER ? request.getPhoneNumber() : null).build();
+				.phoneNumber(request.getRole() == Role.USER ? request.getPhoneNumber() : null)
+				.approvals(request.getTermsAccepted()).build();
 
 		userRepository.save(user);
 

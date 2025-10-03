@@ -13,13 +13,13 @@ import com.bluetrident.dto.UserProfileDTO;
 import com.bluetrident.service.UserService;
 
 @RestController
-@CrossOrigin(origins = "http://localhost:4200") // Angular port
+@CrossOrigin(origins = "*")
 public class UserController {
 
 	@Autowired
 	private UserService userService;
 
-	@GetMapping("/{id}")
+	@GetMapping("user/details/{id}")
 	public ApplicationResponse<UserProfileDTO> getUserProfile(@PathVariable Long userId) {
 		return new ApplicationResponse<>(CommonConstants.SUCCESS, String.valueOf(HttpStatus.OK.value()),
 				CommonConstants.OK, userService.getUserProfile(userId));
