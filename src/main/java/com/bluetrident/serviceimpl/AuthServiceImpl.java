@@ -41,9 +41,9 @@ public class AuthServiceImpl implements AuthService {
 
 		User user = User.builder().fullName(request.getFullName()).username(request.getUsername()) // ← add this line
 				.email(request.getEmail()).password(passwordEncoder.encode(request.getPassword()))
-				.role(request.getRole()).category(category)
-				.phoneNumber(request.getRole() == Role.USER ? request.getPhoneNumber() : null).build();
-
+				.role(request.getRole()==null?Role.USER:request.getRole())
+				.phoneNumber(request.getPhoneNumber()!= null? request.getPhoneNumber() : null).build();
+    
 		userRepository.save(user);
 
 		String token = jwtUtil.generateToken(user.getUsername());
@@ -52,7 +52,7 @@ public class AuthServiceImpl implements AuthService {
 
 	@Override
 	public AuthResponse login(LoginRequest request) {
-		User user = userRepository.findByUsername(request.getUsername())
+		User user = userRepository.findByEmail(request.getEmail())
 				.orElseThrow(() -> new RuntimeException("User not found"));
 
 		if (!passwordEncoder.matches(request.getPassword(), user.getPassword())) {

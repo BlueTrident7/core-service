@@ -42,11 +42,11 @@ public class User {
 	@Enumerated(EnumType.STRING)
 	private Role role;
 
-	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name = "category_id")
-	private Category category;
+//	@ManyToOne(fetch = FetchType.LAZY)
+//	@JoinColumn(name = "category_id")
+//	private Category category;
 
 	private String phoneNumber;
 
-	private boolean approvals;
+//	private boolean approvals;
 }

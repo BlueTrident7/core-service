@@ -5,7 +5,7 @@ import lombok.RequiredArgsConstructor;
 import com.bluetrident.security.JwtUtil;
 
 @RestController
-@RequestMapping("/api/gateway")
+@RequestMapping("/api-gateway")
 @RequiredArgsConstructor
 public class GatewayController {
 

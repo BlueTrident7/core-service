@@ -5,23 +5,29 @@ import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.bluetrident.config.ApplicationResponse;
 import com.bluetrident.config.CommonConstants;
 import com.bluetrident.dto.UserProfileDTO;
+import com.bluetrident.service.AuthService;
 import com.bluetrident.service.UserService;
 
+import lombok.RequiredArgsConstructor;
+
 @RestController
-@CrossOrigin(origins = "http://localhost:4200") // Angular port
+@RequestMapping("/api-gateway")
+@RequiredArgsConstructor
+@CrossOrigin(origins = "*")
 public class UserController {
 
 	@Autowired
 	private UserService userService;
 
-	@GetMapping("/{id}")
-	public ApplicationResponse<UserProfileDTO> getUserProfile(@PathVariable Long userId) {
+	@GetMapping("/user/{id}")
+	public ApplicationResponse<UserProfileDTO> getUserProfile(@PathVariable("id") Long id){
 		return new ApplicationResponse<>(CommonConstants.SUCCESS, String.valueOf(HttpStatus.OK.value()),
-				CommonConstants.OK, userService.getUserProfile(userId));
+				CommonConstants.OK, userService.getUserProfile(id));
 	}
 }
