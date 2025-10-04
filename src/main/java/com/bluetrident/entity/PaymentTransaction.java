@@ -33,13 +33,13 @@ public class PaymentTransaction {
 	@JoinColumn(name = "investment_id")
 	private UserInvestmentPlans investment;
 
-	private String transactionId; // from gateway (e.g., Razorpay/Stripe/PayPal)
+	private String transactionId;
 
 	private Double amount;
 
 	@Enumerated(EnumType.STRING)
-	private PaymentStatus status; // INITIATED, SUCCESS, FAILED
+	private PaymentStatus status;
 
-	private String paymentMethod; // e.g., CARD, UPI, NETBANKING
+	private String paymentMethod;
 	private LocalDateTime createdAt;
 }

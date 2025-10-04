@@ -27,7 +27,6 @@ public class UserRepository {
 			return dto;
 		};
 
-		String sql = UserSQL.getUserProfileById(id);
-		return jdbcTemplate.queryForObject(sql, mapper);
+		return jdbcTemplate.queryForObject(UserSQL.getUserProfileById(id), mapper);
 	}
 }

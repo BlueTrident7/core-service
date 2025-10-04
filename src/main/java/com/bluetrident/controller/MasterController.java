@@ -17,10 +17,12 @@ import org.springframework.web.bind.annotation.RestController;
 import com.bluetrident.config.ApplicationResponse;
 import com.bluetrident.config.CommonConstants;
 import com.bluetrident.config.exception.ApplicationException;
+import com.bluetrident.dto.AdminPanelDTO;
 import com.bluetrident.dto.CategoryPostDTO;
 import com.bluetrident.dto.InvestmentPlanDTO;
 import com.bluetrident.dto.InvestmentPlansDTO;
 import com.bluetrident.dto.TransactionsDTO;
+import com.bluetrident.service.AdminPanelService;
 import com.bluetrident.service.CategoryService;
 import com.bluetrident.service.InvestmentPlanService;
 
@@ -39,7 +41,10 @@ public class MasterController {
 	@Autowired
 	private InvestmentPlanService plansService;
 
-	@PostMapping("/category")
+	@Autowired
+	AdminPanelService adminPanelService;
+
+	@PostMapping("add/category")
 	public ApplicationResponse<CategoryPostDTO> addCategory(@RequestBody CategoryPostDTO dto) throws Exception {
 		try {
 			return new ApplicationResponse<>(CommonConstants.SUCCESS, String.valueOf(HttpStatus.OK.value()),
@@ -67,7 +72,7 @@ public class MasterController {
 		}
 	}
 
-	@PutMapping("/category/{id}")
+	@PutMapping("update/category/{id}")
 	public ApplicationResponse<CategoryPostDTO> updateCategory(@PathVariable Long id, @RequestBody CategoryPostDTO dto)
 			throws Exception {
 		try {
@@ -79,7 +84,7 @@ public class MasterController {
 		}
 	}
 
-	@DeleteMapping("/category/{id}")
+	@DeleteMapping("delete/category/{id}")
 	public ApplicationResponse<Void> deleteCategory(@PathVariable Long id) throws Exception {
 		try {
 			categoryService.deleteCategory(id);
@@ -92,7 +97,7 @@ public class MasterController {
 	}
 
 	// ================= Plans =================
-	@PostMapping("/plan")
+	@PostMapping("add/plan")
 	public ApplicationResponse<InvestmentPlansDTO> addPlan(@RequestBody InvestmentPlansDTO dto) throws Exception {
 		return new ApplicationResponse<>(CommonConstants.SUCCESS, String.valueOf(HttpStatus.OK.value()),
 				CommonConstants.OK, plansService.addPlan(dto));
@@ -115,7 +120,7 @@ public class MasterController {
 		}
 	}
 
-	@PutMapping("/plan/{id}")
+	@PutMapping("update/plan/{id}")
 	public ApplicationResponse<InvestmentPlansDTO> updatePlan(@PathVariable Long id,
 			@RequestBody InvestmentPlansDTO dto) throws Exception {
 		try {
@@ -127,7 +132,7 @@ public class MasterController {
 		}
 	}
 
-	@DeleteMapping("/plan/{id}")
+	@DeleteMapping("delete/plan/{id}")
 	public ApplicationResponse<Void> deletePlan(@PathVariable Long id) throws Exception {
 		try {
 			plansService.deletePlan(id);
@@ -151,5 +156,13 @@ public class MasterController {
 
 		return new ApplicationResponse<>(CommonConstants.SUCCESS, String.valueOf(HttpStatus.OK.value()),
 				CommonConstants.OK, plansService.getTransactionList(userId));
+	}
+
+	@GetMapping("admin/panel")
+	public ApplicationResponse<AdminPanelDTO> getAdminOverViewDetails(
+			@RequestParam(name = "adminId", required = true) Long adminId) {
+
+		return new ApplicationResponse<>(CommonConstants.SUCCESS, String.valueOf(HttpStatus.OK.value()),
+				CommonConstants.OK, adminPanelService.getAdminOverViewDetails(adminId));
 	}
 }
