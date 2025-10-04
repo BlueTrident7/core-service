@@ -10,8 +10,8 @@ import com.bluetrident.entity.UserInvestmentPlans;
 import com.bluetrident.enums.InvestmentStatus;
 import com.bluetrident.enums.PaymentStatus;
 import com.bluetrident.repository.InvestmentPlansRepository;
-import com.bluetrident.repository.PaymentTransactionRepository;
-import com.bluetrident.repository.UserInvestmentRepository;
+import com.bluetrident.repository.IPaymentTransactionRepository;
+import com.bluetrident.repository.IUserInvestmentRepository;
 import com.bluetrident.repository.IUserRepository;
 import com.bluetrident.service.InvestmentService;
 
@@ -25,10 +25,10 @@ public class InvestmentServiceImpl implements InvestmentService {
 	private InvestmentPlansRepository planRepository;
 
 	@Autowired
-	private UserInvestmentRepository investmentRepository;
+	private IUserInvestmentRepository investmentRepository;
 
 	@Autowired
-	private PaymentTransactionRepository transactionRepository;
+	private IPaymentTransactionRepository transactionRepository;
 
 	public InvestmentResponse initiateInvestment(InvestmentRequest request) {
 		var user = userRepository.findById(request.getUserId())

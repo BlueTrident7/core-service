@@ -6,18 +6,18 @@ import org.springframework.stereotype.Service;
 import com.bluetrident.dto.PaymentCallbackRequest;
 import com.bluetrident.enums.InvestmentStatus;
 import com.bluetrident.enums.PaymentStatus;
-import com.bluetrident.repository.PaymentTransactionRepository;
-import com.bluetrident.repository.UserInvestmentRepository;
+import com.bluetrident.repository.IPaymentTransactionRepository;
+import com.bluetrident.repository.IUserInvestmentRepository;
 import com.bluetrident.service.PaymentService;
 
 @Service
 public class PaymentServiceImpl implements PaymentService {
 
 	@Autowired
-	private PaymentTransactionRepository transactionRepository;
+	private IPaymentTransactionRepository transactionRepository;
 
 	@Autowired
-	private UserInvestmentRepository investmentRepository;
+	private IUserInvestmentRepository investmentRepository;
 
 	public String updatePaymentStatus(PaymentCallbackRequest request) {
 		var transaction = transactionRepository.findByTransactionId(request.getTransactionId())

@@ -7,7 +7,7 @@ import org.springframework.stereotype.Repository;
 
 import com.bluetrident.entity.Category;
 @Repository
-public interface CategoryRepository extends JpaRepository<Category, Long> {
+public interface ICategoryRepository extends JpaRepository<Category, Long> {
 
 	Optional<Category> findByCategoryName(String categoryName);
 

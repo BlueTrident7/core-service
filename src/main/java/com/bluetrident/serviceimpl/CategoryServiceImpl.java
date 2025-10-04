@@ -7,7 +7,7 @@ import org.springframework.stereotype.Service;
 
 import com.bluetrident.dto.CategoryPostDTO;
 import com.bluetrident.entity.Category;
-import com.bluetrident.repository.CategoryRepository;
+import com.bluetrident.repository.ICategoryRepository;
 import com.bluetrident.service.CategoryService;
 
 import jakarta.transaction.Transactional;
@@ -17,7 +17,7 @@ public class CategoryServiceImpl implements CategoryService {
 
 	@Autowired
 
-	private CategoryRepository repository;
+	private ICategoryRepository repository;
 
 	@Override
 	@Transactional
