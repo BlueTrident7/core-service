@@ -43,4 +43,6 @@ public class InvestmentPlans {
 	@Enumerated(EnumType.STRING)
 	private PlanType planType;
 
+	private Long lockPeriod;
+
 }

@@ -2,13 +2,14 @@ package com.bluetrident.service;
 
 import java.util.List;
 
+import com.bluetrident.dto.InvestmentGETDTO;
 import com.bluetrident.dto.InvestmentPlanDTO;
 import com.bluetrident.dto.InvestmentPlansDTO;
 import com.bluetrident.dto.TransactionsDTO;
 
 public interface InvestmentPlanService {
 
-	InvestmentPlansDTO getPlanById(Long id) throws Exception;
+	InvestmentGETDTO getPlanById(Long id) throws Exception;
 
 	void deletePlan(Long id) throws Exception;
 
@@ -16,7 +17,7 @@ public interface InvestmentPlanService {
 
 	InvestmentPlansDTO addPlan(InvestmentPlansDTO dto);
 
-	List<InvestmentPlansDTO> getAllPlans();
+	List<InvestmentGETDTO> getAllPlans();
 
 	List<InvestmentPlanDTO> getInvestmentPlans();
 

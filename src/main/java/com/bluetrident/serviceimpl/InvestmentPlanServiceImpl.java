@@ -5,6 +5,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.bluetrident.dto.InvestmentGETDTO;
 import com.bluetrident.dto.InvestmentPlanDTO;
 import com.bluetrident.dto.InvestmentPlansDTO;
 import com.bluetrident.dto.TransactionsDTO;
@@ -35,6 +36,7 @@ public class InvestmentPlanServiceImpl implements InvestmentPlanService {
 		plan.setIdentifierCode("PLAN-" + System.currentTimeMillis());
 		plan.setPlanPlolicy(dto.getPlanDescription());
 		plan.setPlanType(PlanType.valueOf(dto.getPlanType()));
+		plan.setLockPeriod(dto.getLockPeriod());
 		repository.save(plan);
 
 		dto.setIdentifierCode(plan.getIdentifierCode());
@@ -51,6 +53,7 @@ public class InvestmentPlanServiceImpl implements InvestmentPlanService {
 		plan.setDescription(dto.getDescription());
 		plan.setPlanPlolicy(dto.getPlanDescription());
 		plan.setPlanType(PlanType.valueOf(dto.getPlanType().toUpperCase()));
+		plan.setLockPeriod(dto.getLockPeriod());
 		repository.save(plan);
 
 		dto.setIdentifierCode(plan.getIdentifierCode());
@@ -65,24 +68,25 @@ public class InvestmentPlanServiceImpl implements InvestmentPlanService {
 	}
 
 	@Override
-	public List<InvestmentPlansDTO> getAllPlans() {
+	public List<InvestmentGETDTO> getAllPlans() {
 		return repository.findAll().stream().map(plan -> {
-			InvestmentPlansDTO dto = new InvestmentPlansDTO();
+			InvestmentGETDTO dto = new InvestmentGETDTO();
 			dto.setName(plan.getPlanName());
 			dto.setDescription(plan.getDescription());
 			dto.setIdentifierCode(plan.getIdentifierCode());
 			dto.setAmount(plan.getPrice());
 			dto.setPlanDescription(plan.getPlanPlolicy());
 			dto.setPlanType(plan.getPlanType().name());
+			dto.setLockPeriod(plan.getLockPeriod());
 			return dto;
 		}).toList();
 	}
 
 	@Override
-	public InvestmentPlansDTO getPlanById(Long id) throws Exception {
+	public InvestmentGETDTO getPlanById(Long id) throws Exception {
 		InvestmentPlans plan = repository.findById(id).orElseThrow(() -> new Exception("Plan not found"));
 
-		InvestmentPlansDTO dto = new InvestmentPlansDTO();
+		InvestmentGETDTO dto = new InvestmentGETDTO();
 		dto.setName(plan.getPlanName());
 		dto.setDescription(plan.getDescription());
 		dto.setIdentifierCode(plan.getIdentifierCode());

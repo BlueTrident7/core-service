@@ -16,7 +16,9 @@ import com.bluetrident.config.ApplicationResponse;
 import com.bluetrident.config.CommonConstants;
 import com.bluetrident.config.exception.ApplicationException;
 import com.bluetrident.dto.AdminPanelDTO;
+import com.bluetrident.dto.CategoryGetDTO;
 import com.bluetrident.dto.CategoryPostDTO;
+import com.bluetrident.dto.InvestmentGETDTO;
 import com.bluetrident.dto.InvestmentPlanDTO;
 import com.bluetrident.dto.InvestmentPlansDTO;
 import com.bluetrident.dto.TransactionsDTO;
@@ -48,13 +50,13 @@ public class MasterController {
 	}
 
 	@GetMapping("get/category")
-	public ApplicationResponse<List<CategoryPostDTO>> getAllCategories() {
+	public ApplicationResponse<List<CategoryGetDTO>> getAllCategories() {
 		return new ApplicationResponse<>(CommonConstants.SUCCESS, String.valueOf(HttpStatus.OK.value()),
 				CommonConstants.OK, categoryService.getAllCategories());
 	}
 
 	@GetMapping("/category/{id}")
-	public ApplicationResponse<CategoryPostDTO> getCategory(@PathVariable Long id) throws Exception {
+	public ApplicationResponse<CategoryGetDTO> getCategory(@PathVariable Long id) throws Exception {
 		try {
 			return new ApplicationResponse<>(CommonConstants.SUCCESS, String.valueOf(HttpStatus.OK.value()),
 					CommonConstants.OK, categoryService.getCategoryById(id));
@@ -65,8 +67,8 @@ public class MasterController {
 	}
 
 	@PutMapping("update/category/{id}")
-	public ApplicationResponse<CategoryPostDTO> updateCategory(@PathVariable Long id, @RequestBody CategoryPostDTO dto)
-			throws Exception {
+	public ApplicationResponse<CategoryPostDTO> updateCategory(@PathVariable("id") Long id,
+			@RequestBody CategoryPostDTO dto) throws Exception {
 		try {
 			return new ApplicationResponse<>(CommonConstants.SUCCESS, String.valueOf(HttpStatus.OK.value()),
 					CommonConstants.OK, categoryService.updateCategory(id, dto));
@@ -97,13 +99,13 @@ public class MasterController {
 	}
 
 	@GetMapping("get/plans")
-	public ApplicationResponse<List<InvestmentPlansDTO>> getAllPlans() {
+	public ApplicationResponse<List<InvestmentGETDTO>> getAllPlans() {
 		return new ApplicationResponse<>(CommonConstants.SUCCESS, String.valueOf(HttpStatus.OK.value()),
 				CommonConstants.OK, plansService.getAllPlans());
 	}
 
 	@GetMapping("/plan/{id}")
-	public ApplicationResponse<InvestmentPlansDTO> getPlan(@PathVariable Long id) throws Exception {
+	public ApplicationResponse<InvestmentGETDTO> getPlan(@PathVariable Long id) throws Exception {
 		try {
 			return new ApplicationResponse<>(CommonConstants.SUCCESS, String.valueOf(HttpStatus.OK.value()),
 					CommonConstants.OK, plansService.getPlanById(id));

@@ -5,6 +5,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.bluetrident.dto.CategoryGetDTO;
 import com.bluetrident.dto.CategoryPostDTO;
 import com.bluetrident.entity.Category;
 import com.bluetrident.repository.ICategoryRepository;
@@ -52,18 +53,20 @@ public class CategoryServiceImpl implements CategoryService {
 	}
 
 	@Override
-	public List<CategoryPostDTO> getAllCategories() {
+	public List<CategoryGetDTO> getAllCategories() {
 		return repository.findAll().stream().map(c -> {
-			CategoryPostDTO dto = new CategoryPostDTO();
+			CategoryGetDTO dto = new CategoryGetDTO();
+			dto.setId(c.getId());
 			dto.setCategoryName(c.getCategoryName());
 			dto.setDescription(c.getDescription());
 			return dto;
 		}).toList();
 	}
 
-	public CategoryPostDTO getCategoryById(Long id) throws Exception {
+	public CategoryGetDTO getCategoryById(Long id) throws Exception {
 		Category c = repository.findById(id).orElseThrow(() -> new Exception("Category not found"));
-		CategoryPostDTO dto = new CategoryPostDTO();
+		CategoryGetDTO dto = new CategoryGetDTO();
+		dto.setId(c.getId());
 		dto.setCategoryName(c.getCategoryName());
 		dto.setDescription(c.getDescription());
 		return dto;
