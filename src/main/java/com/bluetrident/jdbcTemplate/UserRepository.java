@@ -22,11 +22,8 @@ public class UserRepository {
 			dto.setUserName(rs.getString("user_name"));
 			dto.setEmail(rs.getString("email"));
 			dto.setRole(rs.getString("role"));
-//			dto.setCategoryName(rs.getString("category_name"));
-//			dto.setCategoryIdentifier(rs.getString("identifier_code"));
-//			dto.setCategoryDescription(rs.getString("category_description"));
 			dto.setPhoneNumber(rs.getString("phone_number"));
-//			dto.setApprovals(rs.getBoolean("approvals"));
+			dto.setApprovals(rs.getBoolean("approvals"));
 			return dto;
 		};
 
