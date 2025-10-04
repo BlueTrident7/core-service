@@ -30,11 +30,11 @@ public class SecurityConfig {
 		CorsConfiguration configuration = new CorsConfiguration();
 
 		// Explicitly list your frontend origin(s)
-		configuration.setAllowedOriginPatterns(List.of("http://localhost:4550"));
+		configuration.setAllowedOriginPatterns(List.of("*"));
 		configuration.setAllowedMethods(List.of("GET", "POST", "PUT", "DELETE", "OPTIONS"));
 		configuration.setAllowedHeaders(List.of("*"));
 		configuration.setAllowCredentials(true);
-		configuration.setAllowedOriginPatterns(List.of("http://localhost:4550"));
+		configuration.setAllowedOriginPatterns(List.of("*"));
 // allowed with explicit origin, NOT '*'
 
 		UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
