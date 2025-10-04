@@ -13,6 +13,6 @@ public class InvestmentPlansDTO {
 	private String identifierCode;
 	private double amount;
 	private String planType;
-	private String planDescription;
+	private String planPolicy;
 	private Long lockPeriod;
 }

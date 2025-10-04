@@ -34,7 +34,7 @@ public class InvestmentPlanServiceImpl implements InvestmentPlanService {
 		plan.setPrice(dto.getAmount());
 		plan.setDescription(dto.getDescription());
 		plan.setIdentifierCode("PLAN-" + System.currentTimeMillis());
-		plan.setPlanPlolicy(dto.getPlanDescription());
+		plan.setPlanPolicy(dto.getPlanPolicy());
 		plan.setPlanType(PlanType.valueOf(dto.getPlanType()));
 		plan.setLockPeriod(dto.getLockPeriod());
 		repository.save(plan);
@@ -51,7 +51,7 @@ public class InvestmentPlanServiceImpl implements InvestmentPlanService {
 		plan.setPlanName(dto.getName());
 		plan.setPrice(dto.getAmount());
 		plan.setDescription(dto.getDescription());
-		plan.setPlanPlolicy(dto.getPlanDescription());
+		plan.setPlanPolicy(dto.getPlanPolicy());
 		plan.setPlanType(PlanType.valueOf(dto.getPlanType().toUpperCase()));
 		plan.setLockPeriod(dto.getLockPeriod());
 		repository.save(plan);
@@ -71,11 +71,12 @@ public class InvestmentPlanServiceImpl implements InvestmentPlanService {
 	public List<InvestmentGETDTO> getAllPlans() {
 		return repository.findAll().stream().map(plan -> {
 			InvestmentGETDTO dto = new InvestmentGETDTO();
-			dto.setName(plan.getPlanName());
+			dto.setId(plan.getId());
+			dto.setPlanName(plan.getPlanName());
 			dto.setDescription(plan.getDescription());
 			dto.setIdentifierCode(plan.getIdentifierCode());
 			dto.setAmount(plan.getPrice());
-			dto.setPlanDescription(plan.getPlanPlolicy());
+			dto.setPlanPolicy(plan.getPlanPolicy());
 			dto.setPlanType(plan.getPlanType().name());
 			dto.setLockPeriod(plan.getLockPeriod());
 			return dto;
@@ -87,11 +88,12 @@ public class InvestmentPlanServiceImpl implements InvestmentPlanService {
 		InvestmentPlans plan = repository.findById(id).orElseThrow(() -> new Exception("Plan not found"));
 
 		InvestmentGETDTO dto = new InvestmentGETDTO();
-		dto.setName(plan.getPlanName());
+		dto.setId(plan.getId());
+		dto.setPlanName(plan.getPlanName());
 		dto.setDescription(plan.getDescription());
 		dto.setIdentifierCode(plan.getIdentifierCode());
 		dto.setAmount(plan.getPrice());
-		dto.setPlanDescription(plan.getPlanPlolicy());
+		dto.setPlanPolicy(plan.getPlanPolicy());
 		dto.setPlanType(plan.getPlanType().name());
 		return dto;
 	}

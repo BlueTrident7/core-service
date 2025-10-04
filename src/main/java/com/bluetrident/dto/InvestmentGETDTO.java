@@ -8,11 +8,12 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @Data
 public class InvestmentGETDTO {
-	private String name;
+	private Long id;
+	private String planName;
 	private String description;
 	private String identifierCode;
 	private double amount;
 	private String planType;
-	private String planDescription;
+	private String planPolicy;
 	private Long lockPeriod;
 }

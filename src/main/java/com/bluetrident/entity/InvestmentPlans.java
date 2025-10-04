@@ -15,7 +15,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 @Entity
-@Table(name = "plans")
+@Table(name = "investment_plans")
 @AllArgsConstructor
 @NoArgsConstructor
 @Data
@@ -38,7 +38,7 @@ public class InvestmentPlans {
 	private String description;
 
 	@Column(name = "plan_details")
-	private String planPlolicy;
+	private String planPolicy;
 
 	@Enumerated(EnumType.STRING)
 	private PlanType planType;
