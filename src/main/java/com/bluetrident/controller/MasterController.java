@@ -2,14 +2,13 @@ package com.bluetrident.controller;
 
 import java.util.List;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
-import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
@@ -26,23 +25,17 @@ import com.bluetrident.service.AdminPanelService;
 import com.bluetrident.service.CategoryService;
 import com.bluetrident.service.InvestmentPlanService;
 
-import io.swagger.v3.oas.annotations.parameters.RequestBody;
 import lombok.RequiredArgsConstructor;
 
 @RestController
-@RequestMapping("/api/master")
 @RequiredArgsConstructor
-@CrossOrigin(origins = "*")
+//@RequestMapping("/api-gateway/") // <--- add this
+
 public class MasterController {
 
-	@Autowired
-	private CategoryService categoryService;
-
-	@Autowired
-	private InvestmentPlanService plansService;
-
-	@Autowired
-	AdminPanelService adminPanelService;
+	private final CategoryService categoryService;
+	private final InvestmentPlanService plansService;
+	private final AdminPanelService adminPanelService;
 
 	@PostMapping("add/category")
 	public ApplicationResponse<CategoryPostDTO> addCategory(@RequestBody CategoryPostDTO dto) throws Exception {
@@ -97,6 +90,7 @@ public class MasterController {
 	}
 
 	// ================= Plans =================
+
 	@PostMapping("add/plan")
 	public ApplicationResponse<InvestmentPlansDTO> addPlan(@RequestBody InvestmentPlansDTO dto) throws Exception {
 		return new ApplicationResponse<>(CommonConstants.SUCCESS, String.valueOf(HttpStatus.OK.value()),
@@ -153,7 +147,6 @@ public class MasterController {
 	@GetMapping("transaction/list")
 	public ApplicationResponse<List<TransactionsDTO>> getTransactionList(
 			@RequestParam(name = "userId", required = true) Long userId) {
-
 		return new ApplicationResponse<>(CommonConstants.SUCCESS, String.valueOf(HttpStatus.OK.value()),
 				CommonConstants.OK, plansService.getTransactionList(userId));
 	}
@@ -161,7 +154,6 @@ public class MasterController {
 	@GetMapping("admin/panel")
 	public ApplicationResponse<AdminPanelDTO> getAdminOverViewDetails(
 			@RequestParam(name = "adminId", required = true) Long adminId) {
-
 		return new ApplicationResponse<>(CommonConstants.SUCCESS, String.valueOf(HttpStatus.OK.value()),
 				CommonConstants.OK, adminPanelService.getAdminOverViewDetails(adminId));
 	}
