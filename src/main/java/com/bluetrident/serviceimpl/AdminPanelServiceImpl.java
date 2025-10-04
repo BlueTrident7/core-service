@@ -19,7 +19,8 @@ public class AdminPanelServiceImpl implements AdminPanelService {
 		AdminPanelDTO response = new AdminPanelDTO();
 		response.setStats(repository.getStats());
 		response.setUsers(repository.getUsers());
-		response.setSettings(repository.getSettings());
+//		response.setSettings(repository.getSettings());
+		response.setSettings(null);
 		return response;
 	}
 

@@ -152,9 +152,9 @@ public class MasterController {
 				CommonConstants.OK, plansService.getTransactionList(userId));
 	}
 
-	@GetMapping("admin/panel")
+	@GetMapping("admin/panel/{adminId}")
 	public ApplicationResponse<AdminPanelDTO> getAdminOverViewDetails(
-			@RequestParam(name = "adminId", required = true) Long adminId) {
+			@PathVariable(name = "adminId", required = false) Long adminId) {
 		return new ApplicationResponse<>(CommonConstants.SUCCESS, String.valueOf(HttpStatus.OK.value()),
 				CommonConstants.OK, adminPanelService.getAdminOverViewDetails(adminId));
 	}
