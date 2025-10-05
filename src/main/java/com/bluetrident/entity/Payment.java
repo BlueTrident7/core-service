@@ -1,6 +1,7 @@
 package com.bluetrident.entity;
 
 import com.bluetrident.enums.PaymentStatus;
+import com.bluetrident.enums.TransactionType;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
@@ -28,6 +29,8 @@ public class Payment {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 
+	private String orderId;
+
 	private String razorPayOrderId; // Razorpay order_id
 
 	private String razorPayPaymentId; // Razorpay payment_id
@@ -54,5 +57,8 @@ public class Payment {
 	private String errorCode; // if failed
 
 	private String errorDescription;
+	
+	@Enumerated(EnumType.STRING)
+	private TransactionType type;
 
 }

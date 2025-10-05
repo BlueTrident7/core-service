@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
 import com.bluetrident.dto.CreateOrderRequest;
+import com.bluetrident.dto.MarkPaymentFailedRequest;
 import com.bluetrident.dto.PaymentDetailsDTO;
 import com.bluetrident.dto.VerifyPaymentRequest;
 import com.bluetrident.entity.InvestmentPlans;
@@ -109,7 +110,7 @@ public class RazorpayServiceImpl implements RazorpayService {
 			iUserInvestmentPlansRepository.save(userInvestmentPlan);
 
 			// 5️⃣ Save Payment entity
-			Payment payment = Payment.builder().razorPayOrderId(order.get("id")).user(user)
+			Payment payment = Payment.builder().razorPayOrderId(order.get("id")).user(user).orderId(order.get("id"))
 					.investment(userInvestmentPlan).amount(((Number) order.get("amount")).longValue())
 					.currency((String) order.get("currency")).status(PaymentStatus.CREATED).build();
 
@@ -176,6 +177,29 @@ public class RazorpayServiceImpl implements RazorpayService {
 		} catch (Exception e) {
 			throw new RuntimeException("Error verifying payment: " + e.getMessage(), e);
 		}
+	}
+
+	@Override
+	public MarkPaymentFailedRequest markPaymentAsFailed(MarkPaymentFailedRequest request) {
+
+		Payment payment = paymentRepository.findByOrderId(request.getOrderId());
+
+		if (payment == null) {
+			throw new RuntimeException("Payment not found for orderId: " + request.getOrderId());
+		}
+
+		// Update payment status
+		payment.setStatus(PaymentStatus.FAILED);
+		payment.setErrorDescription(request.getReason() != null ? request.getReason() : "User dismissed payment");
+		paymentRepository.save(payment);
+
+		// Also update UserInvestmentPlans status if needed
+		UserInvestmentPlans investment = payment.getInvestment();
+		if (investment != null) {
+			investment.setStatus(InvestmentStatus.CANCELLED); // or FAILED if that makes more sense
+			iUserInvestmentPlansRepository.save(investment);
+		}
+		return request;
 	}
 
 }

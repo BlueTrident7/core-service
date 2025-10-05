@@ -8,10 +8,11 @@ import org.springframework.stereotype.Service;
 import com.bluetrident.dto.InvestmentGETDTO;
 import com.bluetrident.dto.InvestmentPlanDTO;
 import com.bluetrident.dto.InvestmentPlansDTO;
-import com.bluetrident.dto.TransactionsDTO;
+import com.bluetrident.dto.PaymentTransactionDTO;
 import com.bluetrident.entity.InvestmentPlans;
 import com.bluetrident.enums.PlanType;
 import com.bluetrident.jdbcTemplate.InvestmentPlanRepository;
+import com.bluetrident.jdbcTemplate.PaymentRepositoy;
 import com.bluetrident.repository.IInvestmentPlansRepository;
 import com.bluetrident.service.InvestmentPlanService;
 
@@ -25,6 +26,9 @@ public class InvestmentPlanServiceImpl implements InvestmentPlanService {
 
 	@Autowired
 	private InvestmentPlanRepository investmentPlanRepository;
+
+	@Autowired
+	PaymentRepositoy paymentRepositoy;
 
 	@Transactional
 	@Override
@@ -104,9 +108,8 @@ public class InvestmentPlanServiceImpl implements InvestmentPlanService {
 	}
 
 	@Override
-	public List<TransactionsDTO> getTransactionList(Long userId) {
-
-		return null;
+	public List<PaymentTransactionDTO> getTransactionList(Long userId) {
+		return paymentRepositoy.getAllTransactionsByUserId(userId);
 	}
 
 }

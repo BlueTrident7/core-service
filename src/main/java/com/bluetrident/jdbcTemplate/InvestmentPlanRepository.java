@@ -29,6 +29,7 @@ public class InvestmentPlanRepository {
 				dto.setIdentifierCode(rs.getString("identifier_code"));
 				dto.setDescription(rs.getString("description"));
 				dto.setPlanPolicy(rs.getString("plan_details"));
+				dto.setPlanType(rs.getString("plan_type"));
 				return dto;
 			}
 		};

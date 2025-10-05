@@ -9,4 +9,6 @@ import com.bluetrident.entity.Payment;
 public interface IPaymentRepository extends JpaRepository<Payment, Long> {
 
 	Payment findByRazorPayOrderId(String razorPayOrderId);
+
+	Payment findByOrderId(String orderId);
 }

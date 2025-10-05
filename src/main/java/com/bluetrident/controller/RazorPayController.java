@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.bluetrident.config.ApplicationResponse;
 import com.bluetrident.config.CommonConstants;
 import com.bluetrident.dto.CreateOrderRequest;
+import com.bluetrident.dto.MarkPaymentFailedRequest;
 import com.bluetrident.dto.PaymentDetailsDTO;
 import com.bluetrident.dto.VerifyPaymentRequest;
 import com.bluetrident.service.RazorpayService;
@@ -35,7 +36,7 @@ public class RazorPayController {
 	}
 
 	@PostMapping("verify")
-	public ApplicationResponse<?> verifyPayment(@RequestBody VerifyPaymentRequest request) {
+	public ApplicationResponse<VerifyPaymentRequest> verifyPayment(@RequestBody VerifyPaymentRequest request) {
 		try {
 			return new ApplicationResponse<>(CommonConstants.SUCCESS, String.valueOf(HttpStatus.OK.value()),
 					CommonConstants.OK, razorpayService.verifyAndUpdatePayment(request));
@@ -45,4 +46,15 @@ public class RazorPayController {
 		}
 	}
 
+	@PostMapping("payment/fail")
+	public ApplicationResponse<MarkPaymentFailedRequest> markPaymentAsFailed(
+			@RequestBody MarkPaymentFailedRequest request) {
+		try {
+			return new ApplicationResponse<>(CommonConstants.SUCCESS, String.valueOf(HttpStatus.OK.value()),
+					CommonConstants.OK, razorpayService.markPaymentAsFailed(request));
+		} catch (Exception e) {
+			return new ApplicationResponse<>(CommonConstants.ERROR,
+					String.valueOf(HttpStatus.INTERNAL_SERVER_ERROR.value()), e.getMessage(), null);
+		}
+	}
 }

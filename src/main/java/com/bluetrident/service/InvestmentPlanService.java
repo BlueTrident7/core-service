@@ -5,7 +5,7 @@ import java.util.List;
 import com.bluetrident.dto.InvestmentGETDTO;
 import com.bluetrident.dto.InvestmentPlanDTO;
 import com.bluetrident.dto.InvestmentPlansDTO;
-import com.bluetrident.dto.TransactionsDTO;
+import com.bluetrident.dto.PaymentTransactionDTO;
 
 public interface InvestmentPlanService {
 
@@ -21,6 +21,6 @@ public interface InvestmentPlanService {
 
 	List<InvestmentPlanDTO> getInvestmentPlans();
 
-	List<TransactionsDTO> getTransactionList(Long userId);
+	List<PaymentTransactionDTO> getTransactionList(Long userId);
 
 }

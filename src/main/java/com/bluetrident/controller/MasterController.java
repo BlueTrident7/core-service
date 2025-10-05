@@ -21,7 +21,7 @@ import com.bluetrident.dto.CategoryPostDTO;
 import com.bluetrident.dto.InvestmentGETDTO;
 import com.bluetrident.dto.InvestmentPlanDTO;
 import com.bluetrident.dto.InvestmentPlansDTO;
-import com.bluetrident.dto.TransactionsDTO;
+import com.bluetrident.dto.PaymentTransactionDTO;
 import com.bluetrident.service.AdminPanelService;
 import com.bluetrident.service.CategoryService;
 import com.bluetrident.service.InvestmentPlanService;
@@ -35,7 +35,9 @@ import lombok.RequiredArgsConstructor;
 public class MasterController {
 
 	private final CategoryService categoryService;
+
 	private final InvestmentPlanService plansService;
+
 	private final AdminPanelService adminPanelService;
 
 	@PostMapping("add/category")
@@ -146,7 +148,7 @@ public class MasterController {
 	}
 
 	@GetMapping("transaction/list")
-	public ApplicationResponse<List<TransactionsDTO>> getTransactionList(
+	public ApplicationResponse<List<PaymentTransactionDTO>> getTransactionList(
 			@RequestParam(name = "userId", required = true) Long userId) {
 		return new ApplicationResponse<>(CommonConstants.SUCCESS, String.valueOf(HttpStatus.OK.value()),
 				CommonConstants.OK, plansService.getTransactionList(userId));

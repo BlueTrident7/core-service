@@ -15,4 +15,5 @@ public class InvestmentPlanDTO {
 	private String identifierCode;
 	private String description;
 	private String planPolicy;
+	private String planType;
 }
