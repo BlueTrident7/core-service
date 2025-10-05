@@ -12,7 +12,7 @@ import com.bluetrident.dto.TransactionsDTO;
 import com.bluetrident.entity.InvestmentPlans;
 import com.bluetrident.enums.PlanType;
 import com.bluetrident.jdbcTemplate.InvestmentPlanRepository;
-import com.bluetrident.repository.InvestmentPlansRepository;
+import com.bluetrident.repository.IInvestmentPlansRepository;
 import com.bluetrident.service.InvestmentPlanService;
 
 import jakarta.transaction.Transactional;
@@ -21,7 +21,7 @@ import jakarta.transaction.Transactional;
 public class InvestmentPlanServiceImpl implements InvestmentPlanService {
 
 	@Autowired
-	private InvestmentPlansRepository repository;
+	private IInvestmentPlansRepository repository;
 
 	@Autowired
 	private InvestmentPlanRepository investmentPlanRepository;

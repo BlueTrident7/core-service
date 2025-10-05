@@ -3,37 +3,32 @@ package com.bluetrident.serviceimpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.bluetrident.dto.PaymentCallbackRequest;
-import com.bluetrident.enums.InvestmentStatus;
-import com.bluetrident.enums.PaymentStatus;
-import com.bluetrident.repository.IPaymentTransactionRepository;
-import com.bluetrident.repository.IUserInvestmentRepository;
+import com.bluetrident.repository.IPaymentRepository;
 import com.bluetrident.service.PaymentService;
+import com.bluetrident.service.RazorpayService;
+import com.fasterxml.jackson.databind.ObjectMapper;
 
 @Service
 public class PaymentServiceImpl implements PaymentService {
 
 	@Autowired
-	private IPaymentTransactionRepository transactionRepository;
+	private IPaymentRepository paymentRepository;
 
 	@Autowired
-	private IUserInvestmentRepository investmentRepository;
+	private RazorpayService razorpayService;
 
-	public String updatePaymentStatus(PaymentCallbackRequest request) {
-		var transaction = transactionRepository.findByTransactionId(request.getTransactionId())
-				.orElseThrow(() -> new RuntimeException("Transaction not found"));
+	private final ObjectMapper mapper = new ObjectMapper();
 
-		transaction.setStatus(request.getStatus());
-		transactionRepository.save(transaction);
+//	@Override
+//	public String updatePaymentStatus(PaymentCallbackRequest request) {
+//		return "Callback handled: " + request.getTransactionId();
+//	}
+//
+//	@Override
+//	public Map<String, Object> createRazorpayOrder(long amountInPaise, String receipt, Long userId) throws Exception {
+//		Map<String, Object> order = razorpayService.createOrder(amountInPaise, "INR", receipt);
+//		savePayment(order, userId, amountInPaise);
+//		return order;
+//	}
 
-		var investment = transaction.getInvestment();
-		if (request.getStatus().equals(PaymentStatus.SUCCESS)) {
-			investment.setStatus(InvestmentStatus.ACTIVE);
-		} else {
-			investment.setStatus(InvestmentStatus.FAILED);
-		}
-		investmentRepository.save(investment);
-
-		return "Payment status updated: " + request.getStatus();
-	}
 }

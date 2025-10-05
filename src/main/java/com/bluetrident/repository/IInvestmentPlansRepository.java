@@ -4,6 +4,6 @@ import org.springframework.data.jpa.repository.JpaRepository;
 
 import com.bluetrident.entity.InvestmentPlans;
 
-public interface InvestmentPlansRepository extends JpaRepository<InvestmentPlans, Long> {
+public interface IInvestmentPlansRepository extends JpaRepository<InvestmentPlans, Long> {
 
 }

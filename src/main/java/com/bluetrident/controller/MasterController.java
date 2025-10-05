@@ -158,4 +158,5 @@ public class MasterController {
 		return new ApplicationResponse<>(CommonConstants.SUCCESS, String.valueOf(HttpStatus.OK.value()),
 				CommonConstants.OK, adminPanelService.getAdminOverViewDetails(adminId));
 	}
+
 }

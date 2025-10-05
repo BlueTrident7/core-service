@@ -25,21 +25,27 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @Builder
 public class PaymentTransaction {
+
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 
 	@ManyToOne
-	@JoinColumn(name = "investment_id")
-	private UserInvestmentPlans investment;
+	@JoinColumn(name = "payment_id", nullable = false)
+	private Payment payment; // Linked to Payment entity
 
-	private String transactionId;
+	private String transactionId; // Razorpay or internal transaction ID
 
 	private Double amount;
 
 	@Enumerated(EnumType.STRING)
-	private PaymentStatus status;
+	private PaymentStatus status; // INITIATED, SUCCESS, FAILED, REFUNDED
 
 	private String paymentMethod;
+
+	private String gatewayResponse; // optional JSON from Razorpay
+
+	private String remarks; // custom log messages
+
 	private LocalDateTime createdAt;
 }

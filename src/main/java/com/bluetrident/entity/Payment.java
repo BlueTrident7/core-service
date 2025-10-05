@@ -1,6 +1,6 @@
 package com.bluetrident.entity;
 
-import com.bluetrident.enums.InvestmentStatus;
+import com.bluetrident.enums.PaymentStatus;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
@@ -17,26 +17,42 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 @Entity
-@Table(name = "user_investments")
+@Table(name = "payments")
 @Data
-@NoArgsConstructor
 @AllArgsConstructor
+@NoArgsConstructor
 @Builder
-public class UserInvestmentPlans {
+public class Payment {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
+
+	private String razorPayOrderId; // Razorpay order_id
+
+	private String razorPayPaymentId; // Razorpay payment_id
+
+	private String razorPaySignature; // Razorpay signature verification
 
 	@ManyToOne
 	@JoinColumn(name = "user_id", nullable = false)
 	private User user;
 
 	@ManyToOne
-	@JoinColumn(name = "plan_id", nullable = false)
-	private InvestmentPlans plan;
+	@JoinColumn(name = "investment_id", nullable = false)
+	private UserInvestmentPlans investment;
+
+	private long amount; // Amount in smallest currency unit (e.g., paise)
+
+	private String currency; // e.g., INR
+
+	private String paymentMethod; // Card, UPI, NetBanking, Wallet etc.
 
 	@Enumerated(EnumType.STRING)
-	private InvestmentStatus status; // ACTIVE, PENDING, FAILED, COMPLETED, CANCELLED
+	private PaymentStatus status; // CREATED, SUCCESS, FAILED, REFUNDED
+
+	private String errorCode; // if failed
+
+	private String errorDescription;
 
 }
