@@ -47,7 +47,6 @@ app:
   cors:
     allowed-origins: http://localhost:4550
 razorpay:
-  key-id:
-  key-secret:
-  webhook-secret:
+  key-id: rzp_test_RPnauMGWcIXnOm
+  key-secret: liSw6QUXgdRufdCWFqqKxLJ5
 

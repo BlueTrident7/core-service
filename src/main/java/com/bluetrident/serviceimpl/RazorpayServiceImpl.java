@@ -33,14 +33,10 @@ import com.razorpay.Utils;
 public class RazorpayServiceImpl implements RazorpayService {
 
 	@Value("${razorpay.key-id}")
-	private String keyId;
+	private String KEY;
 
 	@Value("${razorpay.key-secret}")
-	private String keySecret;
-
-	private static final String KEY = "rzp_test_RPnauMGWcIXnOm";
-
-	private static final String SECRET_KEY = "liSw6QUXgdRufdCWFqqKxLJ5";
+	private String SECRET_KEY;
 
 	@Autowired
 	private IPaymentRepository paymentRepository;

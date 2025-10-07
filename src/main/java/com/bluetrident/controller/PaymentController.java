@@ -1,25 +1,21 @@
 package com.bluetrident.controller;
 
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.web.bind.annotation.RestController;
-
-import com.bluetrident.service.PaymentService;
 
 @RestController
 public class PaymentController {
 
-	@Autowired
-	private PaymentService paymentService;
-
-	@Value("${razorpay.key-id}")
-	private String keyId;
-
-	@Value("${razorpay.key-secret}")
-	private String keySecret;
-
-	@Value("${razorpay.webhook-secret}")
-	private String webhookSecret;
+//	@Autowired
+//	private PaymentService paymentService;
+//
+//	@Value("${razorpay.key-id}")
+//	private String keyId;
+//
+//	@Value("${razorpay.key-secret}")
+//	private String keySecret;
+//
+//	@Value("${razorpay.webhook-secret}")
+//	private String webhookSecret;
 
 //	@PostMapping("/create-order")
 //	public ApplicationResponse<Map<String, Object>> createOrder(@RequestBody CreateOrderRequest request) {
