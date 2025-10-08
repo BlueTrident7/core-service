@@ -13,6 +13,7 @@ import com.bluetrident.repository.IUserRepository;
 import com.bluetrident.security.JwtUtil;
 import com.bluetrident.service.AuthService;
 import com.bluetrident.service.CategoryService;
+
 import lombok.RequiredArgsConstructor;
 
 @Service
@@ -22,44 +23,48 @@ public class AuthServiceImpl implements AuthService {
 	private final IUserRepository userRepository;
 	private final PasswordEncoder passwordEncoder;
 	private final JwtUtil jwtUtil;
-
 	private final CategoryService categoryService;
 
 	@Override
-	public AuthResponse register(RegisterRequest request) {
-
-		if (userRepository.existsByUsername(request.getUsername())
+	public AuthResponse register(RegisterRequest request) throws Exception {
+		if (userRepository.existsByUserName(request.getUsername())
 				|| userRepository.existsByEmail(request.getEmail())) {
-			throw new RuntimeException("User already exists");
-		}
-		Category category = null;
-		try {
-			category = categoryService.getFindById(request.getCategoryId());
-		} catch (Exception e) {
+			throw new Exception("User already exists");
 		}
 
-		User user = User.builder().fullName(request.getFullName()).username(request.getUsername()) // ← add this line
+		Category category = null;
+		if (request.getCategoryId() != null) {
+			try {
+				category = categoryService.getFindById(request.getCategoryId());
+			} catch (Exception e) {
+			}
+		}
+
+		User user = User.builder().fullName(request.getFullName()).userName(request.getUsername())
 				.email(request.getEmail()).password(passwordEncoder.encode(request.getPassword()))
-				.role(request.getRole()==null?Role.USER:request.getRole())
-				.phoneNumber(request.getPhoneNumber()!= null? request.getPhoneNumber() : null).build();
+				.role(request.getRole() == null ? Role.USER : request.getRole()).phoneNumber(request.getPhoneNumber())
+				.category(category).build();
 
 		userRepository.save(user);
 
-		String token = jwtUtil.generateToken(user.getUsername());
-		return new AuthResponse(token, user.getUsername());
+		String token = jwtUtil.generateToken(user.getUserName());
+		return new AuthResponse(token, user.getUserName());
 	}
 
 	@Override
 	public AuthResponse login(LoginRequest request) {
+
 		User user = userRepository.findByEmail(request.getEmail())
+				.or(() -> userRepository.findByUserName(request.getEmail()))
 				.orElseThrow(() -> new RuntimeException("User not found"));
 
 		if (!passwordEncoder.matches(request.getPassword(), user.getPassword())) {
 			throw new RuntimeException("Invalid credentials");
 		}
 
-		String token = jwtUtil.generateToken(user.getUsername());
-		return new AuthResponse(token, user.getUsername());
+		String token = jwtUtil.generateToken(user.getUserName());
+
+		return new AuthResponse(token, user.getUserName());
 	}
 
 }

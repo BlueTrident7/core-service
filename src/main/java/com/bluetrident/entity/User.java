@@ -32,7 +32,7 @@ public class User {
 
 	private String fullName;
 
-	private String username;
+	private String userName;
 
 	@Column(unique = true, nullable = false)
 	private String email;
@@ -42,11 +42,11 @@ public class User {
 	@Enumerated(EnumType.STRING)
 	private Role role;
 
-//	@ManyToOne(fetch = FetchType.LAZY)
-//	@JoinColumn(name = "category_id")
-//	private Category category;
+	@ManyToOne(fetch = FetchType.LAZY)
+	@JoinColumn(name = "category_id")
+	private Category category;
 
 	private String phoneNumber;
 
-//	private boolean approvals;
+	private boolean approvals;
 }

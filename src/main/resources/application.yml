@@ -45,7 +45,10 @@ server:
 # CORS Configuration
 app:
   cors:
-    allowed-origins: http://localhost:4550
+    allowed-origins:
+      - http://localhost:4550
+      - https://cipher07.com
+
 razorpay:
   key-id: rzp_test_RPnauMGWcIXnOm
   key-secret: liSw6QUXgdRufdCWFqqKxLJ5

@@ -8,7 +8,9 @@ import com.bluetrident.dto.RegisterRequest;
 
 @Service
 public interface AuthService {
-	AuthResponse register(RegisterRequest request);
-    AuthResponse login(LoginRequest request);
+
+	AuthResponse register(RegisterRequest request) throws Exception;
+
+	AuthResponse login(LoginRequest request);
 
 }

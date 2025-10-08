@@ -29,13 +29,11 @@ public class SecurityConfig {
 	public CorsConfigurationSource corsConfigurationSource() {
 		CorsConfiguration configuration = new CorsConfiguration();
 
-		// Explicitly list your frontend origin(s)
-		configuration.setAllowedOriginPatterns(List.of("*"));
+		// ✅ Explicit frontend origins
+		configuration.setAllowedOriginPatterns(List.of("http://localhost:4550", "https://cipher07.com"));
 		configuration.setAllowedMethods(List.of("GET", "POST", "PUT", "DELETE", "OPTIONS"));
 		configuration.setAllowedHeaders(List.of("*"));
 		configuration.setAllowCredentials(true);
-		configuration.setAllowedOriginPatterns(List.of("*"));
-// allowed with explicit origin, NOT '*'
 
 		UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
 		source.registerCorsConfiguration("/**", configuration);
