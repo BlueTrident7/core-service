@@ -13,7 +13,6 @@ import com.bluetrident.service.AuthService;
 import com.bluetrident.config.exception.ApplicationException;
 
 @RestController
-@RequestMapping("/api/auth")
 @RequiredArgsConstructor
 public class AuthController {
 

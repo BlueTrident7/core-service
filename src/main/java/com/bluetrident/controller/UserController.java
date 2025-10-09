@@ -4,7 +4,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.bluetrident.config.ApplicationResponse;
@@ -15,16 +14,14 @@ import com.bluetrident.service.UserService;
 import lombok.RequiredArgsConstructor;
 
 @RestController
-@RequestMapping("/api-gateway")
 @RequiredArgsConstructor
 public class UserController {
 
 	@Autowired
 	private UserService userService;
 
-
-	@GetMapping("/user/{id}")
-	public ApplicationResponse<UserProfileDTO> getUserProfile(@PathVariable("id") Long id){
+	@GetMapping("user/{id}")
+	public ApplicationResponse<UserProfileDTO> getUserProfile(@PathVariable("id") Long id) {
 		return new ApplicationResponse<>(CommonConstants.SUCCESS, String.valueOf(HttpStatus.OK.value()),
 				CommonConstants.OK, userService.getUserProfile(id));
 	}
