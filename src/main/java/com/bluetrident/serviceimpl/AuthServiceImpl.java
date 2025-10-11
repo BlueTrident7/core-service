@@ -1,8 +1,11 @@
 package com.bluetrident.serviceimpl;
 
+import java.util.Map;
+
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import com.bluetrident.config.exception.ApplicationException;
 import com.bluetrident.dto.AuthResponse;
 import com.bluetrident.dto.LoginRequest;
 import com.bluetrident.dto.RegisterRequest;
@@ -47,8 +50,8 @@ public class AuthServiceImpl implements AuthService {
 
 		userRepository.save(user);
 
-		String token = jwtUtil.generateToken(user.getUserName());
-		return new AuthResponse(token, user.getUserName());
+//		String token = jwtUtil.generateToken(user.getUserName());
+		return new AuthResponse(null, user.getUserName());
 	}
 
 	@Override
@@ -62,9 +65,31 @@ public class AuthServiceImpl implements AuthService {
 			throw new RuntimeException("Invalid credentials");
 		}
 
-		String token = jwtUtil.generateToken(user.getUserName());
+		 String accessToken = jwtUtil.generateToken(user); // short-lived
+		    String refreshToken = jwtUtil.generateRefreshToken(user); 
 
-		return new AuthResponse(token, user.getUserName());
+		return new AuthResponse(accessToken, refreshToken);
 	}
+
+	@Override
+	public AuthResponse refreshToken(String refreshToken) throws ApplicationException {
+		 if (!jwtUtil.validateToken(refreshToken)) {
+	            throw new RuntimeException("Invalid refresh token");
+	        }
+
+	        String username = jwtUtil.getUsernameFromToken(refreshToken);
+	        User user = userRepository.findByUserName(username)
+	                .orElseThrow(() -> new RuntimeException("User not found"));
+
+	        // Generate new access token
+	        String newAccessToken = jwtUtil.generateToken(user);
+
+	        // Optional: generate new refresh token
+	         String newRefreshToken = jwtUtil.generateRefreshToken(user);
+
+
+			return new AuthResponse(newAccessToken, newRefreshToken);
+	}
+	 
 
 }
