@@ -3,6 +3,7 @@ package com.bluetrident.entity;
 import com.bluetrident.enums.PaymentStatus;
 import com.bluetrident.enums.TransactionType;
 
+import jakarta.persistence.Embedded;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
@@ -60,5 +61,10 @@ public class Payment {
 	
 	@Enumerated(EnumType.STRING)
 	private TransactionType type;
+	
+	@Embedded
+	private CustomerTransactionAttribute customerTransactionAttribute;
+	
+	
 
 }

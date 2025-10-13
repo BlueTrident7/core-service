@@ -2,6 +2,7 @@ package com.bluetrident.entity;
 
 import com.bluetrident.enums.InvestmentStatus;
 
+import jakarta.persistence.Embedded;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
@@ -38,5 +39,8 @@ public class UserInvestmentPlans {
 
 	@Enumerated(EnumType.STRING)
 	private InvestmentStatus status; // ACTIVE, PENDING, FAILED, COMPLETED, CANCELLED
+	
+	@Embedded
+	private CustomerTransactionAttribute customerTransactionAttribute;
 
 }

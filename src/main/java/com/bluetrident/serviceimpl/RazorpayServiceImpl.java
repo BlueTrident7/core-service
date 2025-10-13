@@ -7,13 +7,16 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
+import com.bluetrident.config.exception.NotFoundException;
 import com.bluetrident.dto.CreateOrderRequest;
 import com.bluetrident.dto.MarkPaymentFailedRequest;
 import com.bluetrident.dto.PaymentDetailsDTO;
 import com.bluetrident.dto.VerifyPaymentRequest;
+import com.bluetrident.entity.CustomerTransactionAttribute;
 import com.bluetrident.entity.InvestmentPlans;
 import com.bluetrident.entity.Payment;
 import com.bluetrident.entity.PaymentTransaction;
+import com.bluetrident.entity.TokenPayload;
 import com.bluetrident.entity.User;
 import com.bluetrident.entity.UserInvestmentPlans;
 import com.bluetrident.enums.InvestmentStatus;
@@ -23,6 +26,7 @@ import com.bluetrident.repository.IPaymentRepository;
 import com.bluetrident.repository.IPaymentTransactionRepository;
 import com.bluetrident.repository.IUserInvestmentPlansRepository;
 import com.bluetrident.repository.IUserRepository;
+import com.bluetrident.service.CTAService;
 import com.bluetrident.service.RazorpayService;
 import com.razorpay.Order;
 import com.razorpay.RazorpayClient;
@@ -52,6 +56,9 @@ public class RazorpayServiceImpl implements RazorpayService {
 
 	@Autowired
 	private IInvestmentPlansRepository iInvestmentPlansRepository;
+	
+	@Autowired
+	private CTAService ctaService;
 
 //	private final RestTemplate restTemplate = new RestTemplate();
 //
@@ -78,8 +85,17 @@ public class RazorpayServiceImpl implements RazorpayService {
 //	}
 
 	@Override
-	public PaymentDetailsDTO createTransaction(CreateOrderRequest request) {
+	public PaymentDetailsDTO createTransaction(CreateOrderRequest request,TokenPayload tokenPayLoad) {
 		try {
+			
+			CustomerTransactionAttribute cta  =null;
+			try {
+				cta = this.ctaService.getCustomerTransactionAttribute(tokenPayLoad.getSiteId(),
+						tokenPayLoad.getCustomerBusinessId(), tokenPayLoad.getCustomerId(), tokenPayLoad.getUserId(),
+						tokenPayLoad.getUsername());
+			} catch (NotFoundException e) {
+				
+			}
 			// 1️⃣ Fetch User
 			User user = iUserRepository.findById(request.getUserId())
 					.orElseThrow(() -> new RuntimeException("User not found"));
@@ -100,7 +116,7 @@ public class RazorpayServiceImpl implements RazorpayService {
 
 			// 3️⃣ Create or fetch UserInvestmentPlans
 			UserInvestmentPlans userInvestmentPlan = UserInvestmentPlans.builder().user(user).plan(investmentPlans)
-					.status(InvestmentStatus.PENDING) // pending until payment success
+					.status(InvestmentStatus.PENDING).customerTransactionAttribute(cta) // pending until payment success
 					.build();
 
 			iUserInvestmentPlansRepository.save(userInvestmentPlan);
@@ -108,7 +124,7 @@ public class RazorpayServiceImpl implements RazorpayService {
 			// 5️⃣ Save Payment entity
 			Payment payment = Payment.builder().razorPayOrderId(order.get("id")).user(user).orderId(order.get("id"))
 					.investment(userInvestmentPlan).amount(((Number) order.get("amount")).longValue())
-					.currency((String) order.get("currency")).status(PaymentStatus.CREATED).build();
+					.currency((String) order.get("currency")).status(PaymentStatus.CREATED).customerTransactionAttribute(cta).build();
 
 			paymentRepository.save(payment);
 
