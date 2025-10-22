@@ -19,11 +19,13 @@ public class UserRepository {
 			UserProfileDTO dto = new UserProfileDTO();
 			dto.setId(rs.getLong("id"));
 			dto.setFullName(rs.getString("full_name"));
-			dto.setUserName(rs.getString("user_name"));
+			dto.setUserName(rs.getString("username"));
 			dto.setEmail(rs.getString("email"));
 			dto.setRole(rs.getString("role"));
 			dto.setPhoneNumber(rs.getString("phone_number"));
 			dto.setApprovals(rs.getBoolean("approvals"));
+			dto.setGender(rs.getString("gender"));
+			dto.setAge(rs.getString("age"));
 			return dto;
 		};
 

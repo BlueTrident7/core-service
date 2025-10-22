@@ -21,4 +21,6 @@ public class UserProfileDTO {
 	private String categoryDescription;
 	private String phoneNumber;
 	private boolean approvals;
+	private String gender;
+	private String age;
 }

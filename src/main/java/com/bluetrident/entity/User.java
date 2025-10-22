@@ -1,6 +1,7 @@
 package com.bluetrident.entity;
 
 import com.bluetrident.enums.Role;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -45,8 +46,16 @@ public class User {
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "category_id")
 	private Category category;
-
+	
 	private String phoneNumber;
 
 	private boolean approvals;
+	
+	@ManyToOne(fetch = FetchType.LAZY)
+	@JoinColumn(name = "gender_id", referencedColumnName = "id")
+	@JsonIgnore
+	private SystemMaster gender;
+	
+	private Integer age;
+	
 }

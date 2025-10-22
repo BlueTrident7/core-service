@@ -3,8 +3,18 @@ package com.bluetrident.sql;
 public class UserSQL {
 
 	public static String getUserProfileById(Long userId) {
-		String sql = "SELECT u.id, u.full_name, u.user_name, u.email, u.role, " + " " + "u.phone_number, u.approvals "
-				+ "FROM users u " + "WHERE u.id = '" + userId + "'";
+		String sql = "SELECT \r\n"
+				+ "    u.id,\r\n"
+				+ "    u.full_name,\r\n"
+				+ "    u.username,\r\n"
+				+ "    u.email,\r\n"
+				+ "    u.role,\r\n"
+				+ "    u.phone_number,\r\n"
+				+ "    u.approvals,\r\n"
+				+ "	sm.name_en as gender,u.age \r\n"
+				+ "FROM users u\r\n"
+				+ "left join system_master sm on sm.id = u.gender_id \r\n"
+			+ " WHERE u.id = '" + userId + "'";
 
 		return sql;
 	}

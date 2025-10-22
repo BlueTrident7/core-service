@@ -24,4 +24,6 @@ public class RegisterRequest {
 	private Long categoryId;
 
 	private Boolean termsAccepted;
+	private String genderIdentifierCode;
+	private int age;
 }

@@ -10,12 +10,14 @@ import com.bluetrident.dto.AuthResponse;
 import com.bluetrident.dto.LoginRequest;
 import com.bluetrident.dto.RegisterRequest;
 import com.bluetrident.entity.Category;
+import com.bluetrident.entity.SystemMaster;
 import com.bluetrident.entity.User;
 import com.bluetrident.enums.Role;
 import com.bluetrident.repository.IUserRepository;
 import com.bluetrident.security.JwtUtil;
 import com.bluetrident.service.AuthService;
 import com.bluetrident.service.CategoryService;
+import com.bluetrident.service.SystemMasterService;
 
 import lombok.RequiredArgsConstructor;
 
@@ -27,6 +29,7 @@ public class AuthServiceImpl implements AuthService {
 	private final PasswordEncoder passwordEncoder;
 	private final JwtUtil jwtUtil;
 	private final CategoryService categoryService;
+	private final SystemMasterService systemMasterService;
 
 	@Override
 	public AuthResponse register(RegisterRequest request) throws Exception {
@@ -42,10 +45,16 @@ public class AuthServiceImpl implements AuthService {
 			} catch (Exception e) {
 			}
 		}
+		SystemMaster gender = null;
+		if(request.getGenderIdentifierCode()!=null) {
+			gender =	this.systemMasterService.getGenderByCode(request.getGenderIdentifierCode());
+		}
+		
 
 		User user = User.builder().fullName(request.getFullName()).userName(request.getUsername())
 				.email(request.getEmail()).password(passwordEncoder.encode(request.getPassword()))
-				.role(request.getRole() == null ? Role.USER : request.getRole()).phoneNumber(request.getPhoneNumber())
+				.role(request.getRole() == null ? Role.USER : request.getRole())
+				.phoneNumber(request.getPhoneNumber()).gender(gender).age(request.getAge())
 				.category(category).build();
 
 		userRepository.save(user);
