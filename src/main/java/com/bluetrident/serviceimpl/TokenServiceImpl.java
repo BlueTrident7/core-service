@@ -1,5 +1,6 @@
 package com.bluetrident.serviceimpl;
 
+import java.nio.charset.StandardCharsets;
 import java.util.Base64;
 
 import org.springframework.http.HttpHeaders;
@@ -7,11 +8,10 @@ import org.springframework.stereotype.Service;
 
 import com.bluetrident.config.exception.ApplicationException;
 import com.bluetrident.config.exception.BadRequestException;
+import com.bluetrident.config.exception.InvalidAccessException;
 import com.bluetrident.entity.TokenPayload;
 import com.bluetrident.service.TokenService;
 import com.bluetrident.util.AppUtil;
-import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 @Service
@@ -20,27 +20,33 @@ public class TokenServiceImpl implements TokenService {
 	@Override
 	public TokenPayload getTokenPayload(HttpHeaders httpHeaders) throws ApplicationException {
 		String token = httpHeaders.getFirst(HttpHeaders.AUTHORIZATION);
-		if (AppUtil.isNullString(token)) {
-			throw new BadRequestException("authorization token cannot be null/blank!!");
-		}
-		String[] jwtToken = token.split(" ");
-		String[] chunks = jwtToken[1].split("\\.");
 
-		Base64.Decoder decoder = Base64.getUrlDecoder();
+	    if (AppUtil.isNullString(token)) {
+	        throw new BadRequestException("authorization token cannot be null/blank!!");
+	    }
 
-		String payload = new String(decoder.decode(chunks[1]));
+	    // Remove "Bearer " prefix if present
+	    if (token.startsWith("Bearer ")) {
+	        token = token.substring(7);
+	    }
 
-		TokenPayload tokenPayload = null;
+	    try {
+	        // Split token into header, payload, signature
+	        String[] parts = token.split("\\.");
 
-		ObjectMapper objectMapper = new ObjectMapper();
-		try {
-			tokenPayload = objectMapper.readValue(payload, TokenPayload.class);
-		} catch (JsonMappingException e) {
-		} catch (JsonProcessingException e) {
-		}
+	        if (parts.length < 2) {
+	            throw new BadRequestException("Invalid JWT token format!");
+	        }
 
-		return tokenPayload;
-	
+	        // Decode payload (2nd part)
+	        String payloadJson = new String(Base64.getUrlDecoder().decode(parts[1]), StandardCharsets.UTF_8);
+
+	        // Convert to TokenPayload object
+	        ObjectMapper mapper = new ObjectMapper();
+	        return mapper.readValue(payloadJson, TokenPayload.class);
+
+	    } catch (Exception e) {
+	        throw new InvalidAccessException("Error decoding JWT token: " + e.getMessage());
+	    }
 	}
-
 }

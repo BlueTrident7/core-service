@@ -10,11 +10,11 @@ import com.bluetrident.entity.User;
 @Repository
 public interface IUserRepository extends JpaRepository<User, Long> {
 
-	Optional<User> findByUserName(String username);
+	Optional<User> findByUsername(String username);
 
 	Boolean existsByEmail(String email);
 
-	Boolean existsByUserName(String username);
+	Boolean existsByUsername(String username);
 
 	Optional<User> findByEmail(String username);
 

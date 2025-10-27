@@ -91,7 +91,7 @@ public class RazorpayServiceImpl implements RazorpayService {
 			CustomerTransactionAttribute cta  =null;
 			try {
 				cta = this.ctaService.getCustomerTransactionAttribute(tokenPayLoad.getSiteId(),
-						tokenPayLoad.getCustomerBusinessId(), tokenPayLoad.getCustomerId(), tokenPayLoad.getUserId(),
+						tokenPayLoad.getCustomerBusinessId(), tokenPayLoad.getCustomerId(), tokenPayLoad.getId(),
 						tokenPayLoad.getUsername());
 			} catch (NotFoundException e) {
 				

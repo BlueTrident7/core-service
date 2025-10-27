@@ -28,15 +28,18 @@ public class JwtUtil {
     public String generateToken(User user) {
     	 Map<String, Object> claims = new HashMap<>();
     	    claims.put("id", user.getId());
-    	    claims.put("username", user.getUserName());
+    	    claims.put("username", user.getUsername());
     	    claims.put("email", user.getEmail());
     	    claims.put("fullName", user.getFullName());
     	    claims.put("role", user.getRole());
     	    claims.put("gender", user.getGender());
-
+    	    claims.put("customerId", user.getCustomerId());
+    	    claims.put("customerBusinessId", user.getCustomerBusinessId());
+    	    claims.put("siteId", user.getSiteId());
+    	    
     	    return Jwts.builder()
     	            .setClaims(claims)
-    	            .setSubject(user.getUserName())
+    	            .setSubject(user.getUsername())
     	            .setIssuedAt(new Date())
     	            .setExpiration(new Date(System.currentTimeMillis() + EXPIRATION_TIME))
     	            .signWith(Keys.hmacShaKeyFor(SECRET_KEY.getBytes()))
@@ -45,7 +48,7 @@ public class JwtUtil {
     
     public String generateRefreshToken(User user) {
         return Jwts.builder()
-                .setSubject(user.getUserName())
+                .setSubject(user.getUsername())
                 .setIssuedAt(new Date())
                 .setExpiration(new Date(System.currentTimeMillis() + REFRESH_TOKEN_EXPIRATION))
                 .signWith(Keys.hmacShaKeyFor(SECRET_KEY.getBytes()))

@@ -6,16 +6,19 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import com.bluetrident.config.exception.ApplicationException;
+import com.bluetrident.config.exception.NotFoundException;
 import com.bluetrident.dto.AuthResponse;
 import com.bluetrident.dto.LoginRequest;
 import com.bluetrident.dto.RegisterRequest;
 import com.bluetrident.entity.Category;
+import com.bluetrident.entity.CustomerTransactionAttribute;
 import com.bluetrident.entity.SystemMaster;
 import com.bluetrident.entity.User;
 import com.bluetrident.enums.Role;
 import com.bluetrident.repository.IUserRepository;
 import com.bluetrident.security.JwtUtil;
 import com.bluetrident.service.AuthService;
+import com.bluetrident.service.CTAService;
 import com.bluetrident.service.CategoryService;
 import com.bluetrident.service.SystemMasterService;
 
@@ -30,10 +33,11 @@ public class AuthServiceImpl implements AuthService {
 	private final JwtUtil jwtUtil;
 	private final CategoryService categoryService;
 	private final SystemMasterService systemMasterService;
+	private final CTAService ctaService;
 
 	@Override
 	public AuthResponse register(RegisterRequest request) throws Exception {
-		if (userRepository.existsByUserName(request.getUsername())
+		if (userRepository.existsByUsername(request.getUsername())
 				|| userRepository.existsByEmail(request.getEmail())) {
 			throw new Exception("User already exists");
 		}
@@ -50,24 +54,32 @@ public class AuthServiceImpl implements AuthService {
 			gender =	this.systemMasterService.getGenderByCode(request.getGenderIdentifierCode());
 		}
 		
-
-		User user = User.builder().fullName(request.getFullName()).userName(request.getUsername())
+		CustomerTransactionAttribute cta  =null;
+		try {
+			cta = this.ctaService.getCustomerTransactionAttribute(1L,
+					1L, 1L, 1L,
+					"admin");
+		} catch (NotFoundException e) {
+			
+		}
+		User user = User.builder().fullName(request.getFullName()).username(request.getUsername())
 				.email(request.getEmail()).password(passwordEncoder.encode(request.getPassword()))
 				.role(request.getRole() == null ? Role.USER : request.getRole())
-				.phoneNumber(request.getPhoneNumber()).gender(gender).age(request.getAge())
+				.phoneNumber(request.getPhoneNumber()).gender(gender).age(request.getAge()).
+				customerBusinessId(cta.getCustomerBusinessId()).customerId(cta.getCustomerId()).siteId(cta.getSiteId())
 				.category(category).build();
 
 		userRepository.save(user);
 
 //		String token = jwtUtil.generateToken(user.getUserName());
-		return new AuthResponse(null, user.getUserName());
+		return new AuthResponse(null, user.getUsername());
 	}
 
 	@Override
 	public AuthResponse login(LoginRequest request) {
 
 		User user = userRepository.findByEmail(request.getEmail())
-				.or(() -> userRepository.findByUserName(request.getEmail()))
+				.or(() -> userRepository.findByUsername(request.getEmail()))
 				.orElseThrow(() -> new RuntimeException("User not found"));
 
 		if (!passwordEncoder.matches(request.getPassword(), user.getPassword())) {
@@ -87,7 +99,7 @@ public class AuthServiceImpl implements AuthService {
 	        }
 
 	        String username = jwtUtil.getUsernameFromToken(refreshToken);
-	        User user = userRepository.findByUserName(username)
+	        User user = userRepository.findByUsername(username)
 	                .orElseThrow(() -> new RuntimeException("User not found"));
 
 	        // Generate new access token

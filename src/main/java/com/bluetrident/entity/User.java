@@ -33,7 +33,7 @@ public class User {
 
 	private String fullName;
 
-	private String userName;
+	private String username;
 
 	@Column(unique = true, nullable = false)
 	private String email;
@@ -58,4 +58,9 @@ public class User {
 	
 	private Integer age;
 	
+	private Long customerId;
+	
+	private Long customerBusinessId;
+	
+	private Long siteId;
 }
